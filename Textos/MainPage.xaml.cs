@@ -116,9 +116,9 @@ namespace Textos
 
             AcrylicBrush acr = new AcrylicBrush();
             acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
-            acr.TintColor = Color.FromArgb(1, 0, 0, 0);
+            acr.TintColor = Colors.Black;
             acr.TintOpacity = 0.6;
-            acr.FallbackColor = Color.FromArgb(1, 0, 0, 0);
+            acr.FallbackColor = Colors.Black;
             acr.TintLuminosityOpacity = 0.9;
 
             this.Background = acr;
@@ -132,9 +132,9 @@ namespace Textos
 
             AcrylicBrush acr = new AcrylicBrush();
             acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
-            acr.TintColor = Color.FromArgb(1, 255, 255, 255);
+            acr.TintColor = Colors.White; 
             acr.TintOpacity = 0;
-            acr.FallbackColor = Color.FromArgb(1, 255, 255, 255);
+            acr.FallbackColor = Colors.White;
             acr.TintLuminosityOpacity = 0.9;
 
             this.Background = acr;
