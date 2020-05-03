@@ -6,6 +6,7 @@
     xmlns:Windows10version1903="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 8)">
 
     <Application.Resources>
+        
         <AcrylicBrush x:Key="CustomAcrylicDark"
                       BackgroundSource="HostBackdrop"
                       TintColor="Black"
@@ -14,9 +15,17 @@
         <AcrylicBrush x:Key="CustomAcrylicLight"
                       BackgroundSource="HostBackdrop"
                       TintColor="White"
-                      TintOpacity="0.2"
+                      TintOpacity="0"
                       FallbackColor="White"
                       Windows10version1903:TintLuminosityOpacity="0.9"/>
+
+        <AcrylicBrush x:Key="DefaultTheme"
+                      BackgroundSource="HostBackdrop"
+                      TintColor="White"
+                      TintOpacity="0"
+                      FallbackColor="White"
+                      Windows10version1903:TintLuminosityOpacity="0.9"/>
+
     </Application.Resources>
 
 </Application>

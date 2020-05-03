@@ -6,12 +6,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    RequestedTheme="Light"
-    
-    Background="{StaticResource CustomAcrylicLight}">
-    <!--Background="{StaticResource CustomAcrylicLight}"-->
+    Background="White" RequestedTheme="Light">
 
-    <Grid Margin="10,10,10,8" >
+    <Grid>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -23,33 +20,39 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        
-        <TextBox Margin="10,10,10,0" TextWrapping="Wrap" Text=""
-                    Background="{StaticResource CustomAcrylicLight}"
+        <!--Columna 0-->
+
+        <TextBox Margin="20,20,10,0" TextWrapping="Wrap" Text=""
                     Grid.Column="0" Grid.Row="0" AcceptsReturn="True"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     x:Name="textBoxOriginal" PlaceholderText="Texto original"
                     GotFocus="TextBox_GotFocus"
                     TextChanged="textBoxOriginal_TextChanged"/>
 
-        <Grid Height="50" Grid.Column="0" Grid.Row="1">
+        <Grid Height="50" Grid.Column="0" Grid.Row="1" Margin="20,0,10,8">
+
+            <ToggleSwitch OffContent="Claro" OnContent="Oscuro"
+                          x:Name="toggleTema" IsOn="False"
+                          Toggled="toggleTema_Toggled"/>
 
             <Button Content="Limpiar" HorizontalAlignment="Right"
-                    Margin="0,0,10,0" x:Name="btnLimpiarOriginal" 
+                    x:Name="btnLimpiarOriginal"
+                    ToolTipService.ToolTip="Borrar texto original"
+                    Style="{StaticResource ButtonRevealStyle}"
                     Click="btnLimpiarOriginal_Click"/>
 
         </Grid>
-        
 
-        <TextBox Margin="10,10,10,0" TextWrapping="Wrap" Text=""
-                    Background="{StaticResource CustomAcrylicLight}"
+        <!--Columna 1-->
+
+        <TextBox Margin="10,20,20,0" TextWrapping="Wrap" Text=""
                     Grid.Column="1" Grid.Row="0" AcceptsReturn="True"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     IsReadOnly="True" PlaceholderText="Texto sin justificado"
                     x:Name="textBoxFormateado"
                     GotFocus="textBoxFormateado_GotFocus"/>
 
-        <Grid Height="50" Grid.Column="1" Grid.Row="1" Margin="10,0,10,0">
+        <Grid Height="50" Grid.Column="1" Grid.Row="1" Margin="10,0,20,8">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -58,12 +61,21 @@
 
             <Button Content="&#xE895;" HorizontalAlignment="Right"
                     Margin="0,0,20,0" x:Name="btnActualizar"
-                    Height="33"
-                    FontFamily="Segoe MDL2 Assets"
+                    Height="33" FontFamily="Segoe MDL2 Assets"
+                    ToolTipService.ToolTip="Actualizar"
+                    Style="{StaticResource ButtonRevealStyle}"
                     Click="btnActualizar_Click"/>
 
             <Button Content="Copiar" Grid.Column="1" x:Name="btnCopiar"
-                    Click="btnCopiar_Click"/>
+                    ToolTipService.ToolTip="Copiar texto sin justificado"
+                    Style="{StaticResource ButtonRevealStyle}"
+                    Click="btnCopiar_Click">
+                <Button.Flyout>
+                    <Flyout>
+                        <TextBlock Text="Texto copiado!"/>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
 
         </Grid>
 

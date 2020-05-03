@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
@@ -26,10 +27,26 @@ namespace Textos
     public sealed partial class MainPage : Page
     {
         DataPackage dataPackage = new DataPackage();
+        Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public MainPage()
         {
-            this.InitializeComponent();   
+            this.InitializeComponent();
+
+            object value = localSettings.Values["tema"];
+
+            if (value == null)
+            {
+                localSettings.Values["tema"] = false;
+                toggleTema.IsOn = false;
+            }
+            else
+            {
+                if (value.Equals(true))
+                {
+                    toggleTema.IsOn = true;
+                }
+            }
         }
 
         private void quitarJustificado()
@@ -79,6 +96,50 @@ namespace Textos
         private void textBoxFormateado_GotFocus(object sender, RoutedEventArgs e)
         {
             textBoxFormateado.SelectAll();
+        }
+
+        private void toggleTema_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (toggleTema.IsOn)
+            {
+                setThemeDark();
+            }
+            else
+            {  
+                setThemeLight();
+            }
+        }
+
+        private void setThemeDark()
+        {
+            this.RequestedTheme = ElementTheme.Dark;
+
+            AcrylicBrush acr = new AcrylicBrush();
+            acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+            acr.TintColor = Color.FromArgb(1, 0, 0, 0);
+            acr.TintOpacity = 0.6;
+            acr.FallbackColor = Color.FromArgb(1, 0, 0, 0);
+            acr.TintLuminosityOpacity = 0.9;
+
+            this.Background = acr;
+
+            localSettings.Values["tema"] = true;
+        }
+
+        private void setThemeLight()
+        {
+            this.RequestedTheme = ElementTheme.Light;
+
+            AcrylicBrush acr = new AcrylicBrush();
+            acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+            acr.TintColor = Color.FromArgb(1, 255, 255, 255);
+            acr.TintOpacity = 0;
+            acr.FallbackColor = Color.FromArgb(1, 255, 255, 255);
+            acr.TintLuminosityOpacity = 0.9;
+
+            this.Background = acr;
+
+            localSettings.Values["tema"] = false;
         }
     }
 }
