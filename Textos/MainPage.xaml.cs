@@ -9,6 +9,7 @@ using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,12 +28,14 @@ namespace Textos
     public sealed partial class MainPage : Page
     {
         DataPackage dataPackage = new DataPackage();
+
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
         public MainPage()
         {
             this.InitializeComponent();
 
+            // Cargo la configuracion del tema
             object value = localSettings.Values["tema"];
 
             if (value == null)
@@ -46,14 +49,26 @@ namespace Textos
                 {
                     toggleTema.IsOn = true;
                 }
+                else
+                {
+                    setThemeLight();
+                }
             }
+
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            titleBar.ForegroundColor = Colors.White;
+            titleBar.BackgroundColor = Colors.Black;
         }
 
-        private void quitarJustificado()
+        /// <summary>
+        /// Funcion que quita el justificado de un texto.
+        /// </summary>
+        private string QuitarJustificado(string texto)
         {
             char[] separator = {' '};
 
-            string[] palabras = textBoxOriginal.Text.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            string[] palabras = texto.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
             string oracion = "";
 
@@ -62,14 +77,16 @@ namespace Textos
                 oracion += $"{palabra} ";
             }
 
-            textBoxFormateado.Text = oracion;
+            return oracion;
         }
 
         private void btnCopiar_Click(object sender, RoutedEventArgs e)
         {
-            // copy 
+            // Copiar el texto sin justificado 
             dataPackage.RequestedOperation = DataPackageOperation.Copy;
+
             dataPackage.SetText(textBoxFormateado.Text);
+
             Clipboard.SetContent(dataPackage);
         }
 
@@ -80,7 +97,7 @@ namespace Textos
 
         private void btnActualizar_Click(object sender, RoutedEventArgs e)
         {
-            quitarJustificado();
+            textBoxFormateado.Text = QuitarJustificado(textBoxOriginal.Text);
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -90,7 +107,7 @@ namespace Textos
 
         private void textBoxOriginal_TextChanged(object sender, TextChangedEventArgs e)
         {
-            quitarJustificado();
+            textBoxFormateado.Text = QuitarJustificado(textBoxOriginal.Text);
         }
 
         private void textBoxFormateado_GotFocus(object sender, RoutedEventArgs e)
@@ -114,12 +131,13 @@ namespace Textos
         {
             this.RequestedTheme = ElementTheme.Dark;
 
+            // fondo de acrilico negro
             AcrylicBrush acr = new AcrylicBrush();
             acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
             acr.TintColor = Colors.Black;
             acr.TintOpacity = 0.6;
             acr.FallbackColor = Colors.Black;
-            acr.TintLuminosityOpacity = 0.9;
+            acr.TintLuminosityOpacity = 1;
 
             this.Background = acr;
 
@@ -130,6 +148,7 @@ namespace Textos
         {
             this.RequestedTheme = ElementTheme.Light;
 
+            // fondo de acrilico blanco
             AcrylicBrush acr = new AcrylicBrush();
             acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
             acr.TintColor = Colors.White; 

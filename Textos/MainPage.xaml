@@ -27,7 +27,7 @@
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     x:Name="textBoxOriginal" PlaceholderText="Texto original"
                     GotFocus="TextBox_GotFocus"
-                    TextChanged="textBoxOriginal_TextChanged"/>
+                    TextChanged="textBoxOriginal_TextChanged" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
 
         <Grid Height="50" Grid.Column="0" Grid.Row="1" Margin="20,0,10,8">
 
