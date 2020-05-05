@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources.Core;
 using Windows.Foundation;
@@ -35,6 +36,8 @@ namespace Textos
         {
             this.InitializeComponent();
 
+            CustomTitleBar();
+
             // Cargo la configuracion del tema
             object value = localSettings.Values["tema"];
 
@@ -54,11 +57,21 @@ namespace Textos
                     setThemeLight();
                 }
             }
+        }
 
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+        private void CustomTitleBar()
+        {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
 
-            titleBar.ForegroundColor = Colors.White;
-            titleBar.BackgroundColor = Colors.Black;
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+
+            Window.Current.SetTitleBar(AppTitleBar);
+        }
+
+        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar sender, object args)
+        {
+            AppTitleBar.Height = sender.Height;
         }
 
         /// <summary>
@@ -131,15 +144,19 @@ namespace Textos
         {
             this.RequestedTheme = ElementTheme.Dark;
 
-            // fondo de acrilico negro
-            AcrylicBrush acr = new AcrylicBrush();
-            acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
-            acr.TintColor = Colors.Black;
-            acr.TintOpacity = 0.6;
-            acr.FallbackColor = Colors.Black;
-            acr.TintLuminosityOpacity = 1;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-            this.Background = acr;
+            titleBar.ButtonForegroundColor = Colors.White;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonHoverForegroundColor = Colors.White;
+            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(30, 255, 255, 255);
+            titleBar.ButtonPressedForegroundColor = Colors.White;
+            titleBar.ButtonPressedBackgroundColor = Colors.DodgerBlue;
+
+            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+            this.Background = CrearAcrilicoDark();
 
             localSettings.Values["tema"] = true;
         }
@@ -148,17 +165,44 @@ namespace Textos
         {
             this.RequestedTheme = ElementTheme.Light;
 
-            // fondo de acrilico blanco
-            AcrylicBrush acr = new AcrylicBrush();
-            acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
-            acr.TintColor = Colors.White; 
-            acr.TintOpacity = 0;
-            acr.FallbackColor = Colors.White;
-            acr.TintLuminosityOpacity = 0.9;
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
 
-            this.Background = acr;
+            titleBar.ButtonForegroundColor = Colors.Black;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonHoverForegroundColor = Colors.Black;
+            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(180, 255, 255, 255);
+            titleBar.ButtonPressedForegroundColor = Colors.White;
+            titleBar.ButtonPressedBackgroundColor = Colors.DodgerBlue;
+
+            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+
+            this.Background = CrearAcrilicoLight();
 
             localSettings.Values["tema"] = false;
+        }
+
+        private AcrylicBrush CrearAcrilicoLight()
+        {
+            AcrylicBrush acr = new AcrylicBrush();
+            acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+            acr.TintColor = Colors.White;
+            acr.TintOpacity = 0.2;
+            acr.FallbackColor = Color.FromArgb(255, 233, 233, 233);
+            acr.TintLuminosityOpacity = 0.8;
+
+            return acr;
+        }
+
+        private AcrylicBrush CrearAcrilicoDark()
+        {
+            AcrylicBrush acr = new AcrylicBrush();
+            acr.BackgroundSource = AcrylicBackgroundSource.HostBackdrop;
+            acr.TintColor = Colors.Black;
+            acr.TintOpacity = 0.8;
+            acr.FallbackColor = Color.FromArgb(255, 45, 45, 45);
+
+            return acr;
         }
     }
 }

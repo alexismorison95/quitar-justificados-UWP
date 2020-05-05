@@ -16,43 +16,64 @@
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <Grid x:Name="AppTitleBar" Background="Transparent" 
+            Grid.Row="0" Grid.ColumnSpan="2">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
+                <ColumnDefinition/>
+                <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
+            </Grid.ColumnDefinitions>
+            
+            <Image Source="Assets/Square44x44Logo.png" 
+                Grid.Column="1" HorizontalAlignment="Left" 
+                Width="20" Height="20" Margin="12,0"/>
+            
+            <TextBlock Text="Convertidor de textos" 
+                Grid.Column="1" Margin="44,8,0,0"
+                Style="{StaticResource CaptionTextBlockStyle}"/>
+            
+        </Grid>
+
         <!--Columna 0-->
 
-        <TextBox Margin="20,20,10,0" TextWrapping="Wrap" Text=""
-                    Grid.Column="0" Grid.Row="0" AcceptsReturn="True"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    x:Name="textBoxOriginal" PlaceholderText="Texto original"
-                    GotFocus="TextBox_GotFocus"
-                    TextChanged="textBoxOriginal_TextChanged" Style="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+        <TextBox Margin="20,10,10,0" TextWrapping="Wrap" Text=""
+            Grid.Column="0" Grid.Row="1" AcceptsReturn="True"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            x:Name="textBoxOriginal" PlaceholderText="Texto original"
+            GotFocus="TextBox_GotFocus"
+            TextChanged="textBoxOriginal_TextChanged"/>
 
-        <Grid Height="50" Grid.Column="0" Grid.Row="1" Margin="20,0,10,8">
+        <Grid Height="50" Grid.Column="0" Grid.Row="2" Margin="20,0,10,8">
 
             <ToggleSwitch OffContent="Claro" OnContent="Oscuro"
-                          x:Name="toggleTema" IsOn="False"
-                          Toggled="toggleTema_Toggled"/>
+                x:Name="toggleTema" IsOn="False"
+                ToolTipService.ToolTip="Cambiar de tema"
+                Toggled="toggleTema_Toggled"/>
 
             <Button Content="Limpiar" HorizontalAlignment="Right"
-                    x:Name="btnLimpiarOriginal"
-                    ToolTipService.ToolTip="Borrar texto original"
-                    Style="{StaticResource ButtonRevealStyle}"
-                    Click="btnLimpiarOriginal_Click"/>
+                x:Name="btnLimpiarOriginal"
+                ToolTipService.ToolTip="Borrar texto original"
+                Style="{StaticResource ButtonRevealStyle}"
+                Click="btnLimpiarOriginal_Click"/>
 
         </Grid>
 
         <!--Columna 1-->
 
-        <TextBox Margin="10,20,20,0" TextWrapping="Wrap" Text=""
-                    Grid.Column="1" Grid.Row="0" AcceptsReturn="True"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    IsReadOnly="True" PlaceholderText="Texto sin justificado"
-                    x:Name="textBoxFormateado"
-                    GotFocus="textBoxFormateado_GotFocus"/>
+        <TextBox Margin="10,10,20,0" TextWrapping="Wrap" Text=""
+            Grid.Column="1" Grid.Row="1" AcceptsReturn="True"
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            IsReadOnly="True" PlaceholderText="Texto sin justificado"
+            x:Name="textBoxFormateado"
+            GotFocus="textBoxFormateado_GotFocus"/>
 
-        <Grid Height="50" Grid.Column="1" Grid.Row="1" Margin="10,0,20,8">
+        <Grid Height="50" Grid.Column="1" Grid.Row="2" Margin="10,0,20,8">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -60,16 +81,16 @@
             </Grid.ColumnDefinitions>
 
             <Button Content="&#xE895;" HorizontalAlignment="Right"
-                    Margin="0,0,20,0" x:Name="btnActualizar"
-                    Height="33" FontFamily="Segoe MDL2 Assets"
-                    ToolTipService.ToolTip="Actualizar"
-                    Style="{StaticResource ButtonRevealStyle}"
-                    Click="btnActualizar_Click"/>
+                Margin="0,0,20,0" x:Name="btnActualizar"
+                Height="33" FontFamily="Segoe MDL2 Assets"
+                ToolTipService.ToolTip="Actualizar"
+                Style="{StaticResource ButtonRevealStyle}"
+                Click="btnActualizar_Click"/>
 
             <Button Content="Copiar" Grid.Column="1" x:Name="btnCopiar"
-                    ToolTipService.ToolTip="Copiar texto sin justificado"
-                    Style="{StaticResource ButtonRevealStyle}"
-                    Click="btnCopiar_Click">
+                ToolTipService.ToolTip="Copiar texto sin justificado"
+                Style="{StaticResource ButtonRevealStyle}"
+                Click="btnCopiar_Click">
                 <Button.Flyout>
                     <Flyout>
                         <TextBlock Text="Texto copiado!"/>
