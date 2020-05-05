@@ -44,7 +44,8 @@ namespace Textos
             if (value == null)
             {
                 localSettings.Values["tema"] = false;
-                toggleTema.IsOn = false;
+
+                setThemeLight();
             }
             else
             {
@@ -144,19 +145,11 @@ namespace Textos
         {
             this.RequestedTheme = ElementTheme.Dark;
 
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            titleBar.ButtonForegroundColor = Colors.White;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonHoverForegroundColor = Colors.White;
-            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(30, 255, 255, 255);
-            titleBar.ButtonPressedForegroundColor = Colors.White;
-            titleBar.ButtonPressedBackgroundColor = Colors.DodgerBlue;
-
-            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            CrearTitleBarDark();
 
             this.Background = CrearAcrilicoDark();
+
+            textBlockTema.Text = "Oscuro";
 
             localSettings.Values["tema"] = true;
         }
@@ -165,19 +158,11 @@ namespace Textos
         {
             this.RequestedTheme = ElementTheme.Light;
 
-            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
-            titleBar.ButtonForegroundColor = Colors.Black;
-            titleBar.ButtonBackgroundColor = Colors.Transparent;
-            titleBar.ButtonHoverForegroundColor = Colors.Black;
-            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(180, 255, 255, 255);
-            titleBar.ButtonPressedForegroundColor = Colors.White;
-            titleBar.ButtonPressedBackgroundColor = Colors.DodgerBlue;
-
-            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
-            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+            CrearTitleBarLight();
 
             this.Background = CrearAcrilicoLight();
+
+            textBlockTema.Text = "Claro";
 
             localSettings.Values["tema"] = false;
         }
@@ -203,6 +188,36 @@ namespace Textos
             acr.FallbackColor = Color.FromArgb(255, 45, 45, 45);
 
             return acr;
+        }
+
+        private void CrearTitleBarLight()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            titleBar.ButtonForegroundColor = Colors.Black;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonHoverForegroundColor = Colors.Black;
+            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(180, 255, 255, 255);
+            titleBar.ButtonPressedForegroundColor = Colors.White;
+            titleBar.ButtonPressedBackgroundColor = Colors.DodgerBlue;
+
+            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
+        }
+
+        private void CrearTitleBarDark()
+        {
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+
+            titleBar.ButtonForegroundColor = Colors.White;
+            titleBar.ButtonBackgroundColor = Colors.Transparent;
+            titleBar.ButtonHoverForegroundColor = Colors.White;
+            titleBar.ButtonHoverBackgroundColor = Color.FromArgb(30, 255, 255, 255);
+            titleBar.ButtonPressedForegroundColor = Colors.White;
+            titleBar.ButtonPressedBackgroundColor = Colors.DodgerBlue;
+
+            titleBar.ButtonInactiveForegroundColor = Colors.Gray;
+            titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
     }
 }
