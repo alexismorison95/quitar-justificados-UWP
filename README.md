@@ -6,7 +6,11 @@ Desarrollado en C# UWP.
 
 El proyecto tiene tema oscuro y claro
 
-![Tema claro 1](https://raw.githubusercontent.com/alexismorison95/quitar-justificados-UWP/master/Textos/Assets/claro1.png)
+<div class="pull-left">
 
+![Tema claro 1](https://raw.githubusercontent.com/alexismorison95/quitar-justificados-UWP/master/Textos/Assets/claro1.png)
+</div>   
+<div class="pull-right">
 
 ![Tema claro 1](https://raw.githubusercontent.com/alexismorison95/quitar-justificados-UWP/master/Textos/Assets/oscuro1.png)
+</div>   
