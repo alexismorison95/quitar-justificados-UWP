@@ -91,7 +91,7 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <CheckBox Content="Guiones" IsChecked="True"
+            <CheckBox Content="Sin guiones" IsChecked="True"
                       x:Name="checkBoxGuiones" 
                       Checked="checkBoxGuiones_Checked"
                       Unchecked="checkBoxGuiones_Unchecked"/>
