@@ -32,6 +32,8 @@ namespace Textos
 
         Windows.Storage.ApplicationDataContainer localSettings = Windows.Storage.ApplicationData.Current.LocalSettings;
 
+        Boolean withGuiones = true;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -94,6 +96,36 @@ namespace Textos
             return oracion;
         }
 
+
+        private string QuitarSaltos(string texto)
+        {
+            string[] oraciones = texto.Split(Environment.NewLine.ToCharArray(), StringSplitOptions.None);
+
+            string textoResultado = "";
+
+            foreach (string oracion in oraciones)
+            {
+                if (oracion.Contains("-"))
+                {
+                    textoResultado += oracion;
+                }
+                else
+                {
+                    textoResultado += $"{oracion} ";
+                }
+                
+            }
+
+            return textoResultado;
+        }
+
+
+        private string QuitarGuiones(string texto)
+        {
+            return texto.Replace("-", "");
+        }
+
+
         private void btnCopiar_Click(object sender, RoutedEventArgs e)
         {
             // Copiar el texto sin justificado 
@@ -111,7 +143,12 @@ namespace Textos
 
         private void btnActualizar_Click(object sender, RoutedEventArgs e)
         {
-            textBoxFormateado.Text = QuitarJustificado(textBoxOriginal.Text);
+            textBoxFormateado.Text = QuitarJustificado(QuitarSaltos(textBoxOriginal.Text));
+
+            if (withGuiones)
+            {
+                textBoxFormateado.Text = QuitarGuiones(textBoxFormateado.Text);
+            }
         }
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -121,12 +158,29 @@ namespace Textos
 
         private void textBoxOriginal_TextChanged(object sender, TextChangedEventArgs e)
         {
-            textBoxFormateado.Text = QuitarJustificado(textBoxOriginal.Text);
+            textBoxFormateado.Text = QuitarJustificado(QuitarSaltos(textBoxOriginal.Text));
+
+            if (withGuiones)
+            {
+                textBoxFormateado.Text = QuitarGuiones(textBoxFormateado.Text);
+            }
         }
 
         private void textBoxFormateado_GotFocus(object sender, RoutedEventArgs e)
         {
             textBoxFormateado.SelectAll();
+        }
+
+        private void checkBoxGuiones_Checked(object sender, RoutedEventArgs e)
+        {
+            textBoxFormateado.Text = QuitarGuiones(textBoxFormateado.Text);
+            withGuiones = true;
+        }
+
+        private void checkBoxGuiones_Unchecked(object sender, RoutedEventArgs e)
+        {
+            textBoxFormateado.Text = QuitarJustificado(QuitarSaltos(textBoxOriginal.Text));
+            withGuiones = false;
         }
 
         private void toggleTema_Toggled(object sender, RoutedEventArgs e)
@@ -219,5 +273,7 @@ namespace Textos
             titleBar.ButtonInactiveForegroundColor = Colors.Gray;
             titleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
         }
+
+        
     }
 }

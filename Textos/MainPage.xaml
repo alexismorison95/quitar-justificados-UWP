@@ -79,7 +79,7 @@
         <TextBox Margin="10,10,20,0" TextWrapping="Wrap" Text=""
             Grid.Column="1" Grid.Row="1" AcceptsReturn="True"
             ScrollViewer.VerticalScrollBarVisibility="Auto"
-            IsReadOnly="True" PlaceholderText="Texto sin justificado"
+            IsReadOnly="True" PlaceholderText="Texto sin justificado, guiones ni saltos de línea"
             x:Name="textBoxFormateado"
             GotFocus="textBoxFormateado_GotFocus"/>
 
@@ -88,10 +88,16 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
+            <CheckBox Content="Guiones" IsChecked="True"
+                      x:Name="checkBoxGuiones" 
+                      Checked="checkBoxGuiones_Checked"
+                      Unchecked="checkBoxGuiones_Unchecked"/>
+
             <Button Content="&#xE895;" HorizontalAlignment="Right"
-                Margin="0,0,20,0" x:Name="btnActualizar"
+                Margin="0,0,20,0" x:Name="btnActualizar" Grid.Column="0"
                 Height="33" FontFamily="Segoe MDL2 Assets"
                 ToolTipService.ToolTip="Actualizar"
                 Style="{StaticResource ButtonRevealStyle}"
