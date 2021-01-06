@@ -2,119 +2,240 @@
     x:Class="Textos.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:local="using:Textos"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
     mc:Ignorable="d"
     Background="White" RequestedTheme="Light">
 
     <Grid>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
+        <!--Header-->
+
         <Grid x:Name="AppTitleBar" Background="Transparent" 
-            Grid.Row="0" Grid.ColumnSpan="2">
+            Grid.Row="0" Grid.ColumnSpan="3">
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftPaddingColumn" Width="0"/>
                 <ColumnDefinition/>
                 <ColumnDefinition x:Name="RightPaddingColumn" Width="0"/>
             </Grid.ColumnDefinitions>
-            
+
             <Image Source="Assets/Square44x44Logo.png" 
                 Grid.Column="1" HorizontalAlignment="Left" 
                 Width="20" Height="20" Margin="12,0"/>
-            
+
             <TextBlock Text="Convertidor de texto" 
                 Grid.Column="1" Margin="44,8,0,0"
                 Style="{StaticResource CaptionTextBlockStyle}"/>
+
+        </Grid>
+
+        <!--Tabs-->
+
+        <controls:TabView x:Name="Tabs" Grid.Row="1" Padding="0, 10, 0, 0">
+
+            <!--Tab 1-->
+            <controls:TabViewItem Header="Formatear texto">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="128*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="125*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Columna 0-->
+
+                    <TextBox Margin="20,10,10,0" TextWrapping="Wrap" Text=""
+                            Grid.Column="0" Grid.Row="0" AcceptsReturn="True"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            x:Name="textBoxOriginal" PlaceholderText="Texto original"
+                            GotFocus="TextBox_GotFocus"
+                            TextChanged="textBoxOriginal_TextChanged"/>
+
+                    <Grid Height="50" Grid.Column="0" Grid.Row="1" Margin="20,0,10,8">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="Limpiar" HorizontalAlignment="Right"
+                                x:Name="btnLimpiarOriginal" Grid.Column="2"
+                                ToolTipService.ToolTip="Borrar texto original"
+                                Style="{StaticResource ButtonRevealStyle}"
+                                Click="btnLimpiarOriginal_Click"/>
+
+                    </Grid>
+
+                    <!--Columna 1-->
+
+                    <TextBox Margin="10,10,20,0" TextWrapping="Wrap" Text=""
+                            Grid.Column="1" Grid.Row="0" AcceptsReturn="True"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            IsReadOnly="True" 
+                            PlaceholderText="Texto sin justificado, sin guiones ni saltos de línea"
+                            x:Name="textBoxFormateado"
+                            GotFocus="textBoxFormateado_GotFocus" Grid.ColumnSpan="2"/>
+
+                    <Grid Height="50" Grid.Column="1" Margin="10,0,20,8" Grid.ColumnSpan="2"
+                          Grid.Row="1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Content="Sin guiones" IsChecked="True"
+                                  x:Name="checkBoxGuiones" 
+                                  Checked="checkBoxGuiones_Checked"
+                                  Unchecked="checkBoxGuiones_Unchecked"/>
+
+                        <Button Content="Copiar" Grid.Column="1" x:Name="btnCopiar"
+                                ToolTipService.ToolTip="Copiar texto sin justificado"
+                                Style="{StaticResource ButtonRevealStyle}"
+                                Click="btnCopiar_Click">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <TextBlock Text="Texto copiado!"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+
+                    </Grid>
+
+                </Grid>
+            </controls:TabViewItem>
+
+            <!--Tab 2-->
+            <controls:TabViewItem Header="Imagen a texto">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="128*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="125*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!--Columna 0-->
+
+                    <Border BorderBrush="Gray" Margin="20,10,10,0"
+                            BorderThickness="2">
+
+                        <controls:ImageEx x:Name="ImageExControl1"
+                                  IsCacheEnabled="True" Source=""
+                                  PlaceholderSource="/Assets/StoreLogo.scale-400.png"/>
+                    </Border>
+
+                    <Grid Height="50" Grid.Column="0" Grid.Row="1" Margin="20,0,10,8">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="Pegar" HorizontalAlignment="Right"
+                                x:Name="btnPegarImg" Grid.Column="0" Margin="0, 0, 20, 0"
+                                ToolTipService.ToolTip="Pegar imagen"
+                                Style="{StaticResource ButtonRevealStyle}" 
+                                Click="btnPegarImg_Click"/>
+
+                        <Button Content="Seleccionar" HorizontalAlignment="Right"
+                                x:Name="btnSeleccionarImg" Grid.Column="1"
+                                ToolTipService.ToolTip="Seleccionar archivo"
+                                Style="{StaticResource ButtonRevealStyle}" 
+                                Click="btnSeleccionarImg_Click"/>
+
+                    </Grid>
+
+                    <!--Columna 1-->
+
+                    <TextBox Margin="10,10,20,0" TextWrapping="Wrap" Text=""
+                            Grid.Column="1" Grid.Row="0" AcceptsReturn="True"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto"
+                            IsReadOnly="True" PlaceholderText="Texto de imagen"
+                            x:Name="textBoxFormateado1" Grid.ColumnSpan="2"
+                             GotFocus="textBoxFormateado1_GotFocus"/>
+
+                    <Grid Height="50" Grid.Column="1" Margin="10,0,20,8" Grid.ColumnSpan="2"
+                          Grid.Row="1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="Copiar" Grid.Column="1" x:Name="btnCopiarTxtImg"
+                                ToolTipService.ToolTip="Copiar texto de imagen"
+                                Style="{StaticResource ButtonRevealStyle}" 
+                                Click="btnCopiarTxtImg_Click">
+                            <Button.Flyout>
+                                <Flyout>
+                                    <TextBlock Text="Texto copiado!"/>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+
+                    </Grid>
+
+                </Grid>
+
+            </controls:TabViewItem>
+
+            <!--Configuraciones-->
             
-        </Grid>
+            <controls:TabView.TabEndHeader>
+                <Button Width="48"
+                        Height="40"
+                        Margin="-1,0,0,0"
+                        BorderThickness="1" 
+                        Background="Transparent" 
+                        Style="{StaticResource ButtonRevealStyle}"
+                        ToolTipService.ToolTip="Configuraciones">
+                    <Viewbox MaxWidth="16" MaxHeight="16">
+                        <SymbolIcon Symbol="Setting"/>
+                    </Viewbox>
 
-        <!--Columna 0-->
+                    <Button.Flyout>
+                        <Flyout x:Name="flyoutSettings">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="Background" Value="{StaticResource FlyoutBackBrush}"/>
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
+                            
+                            <ToggleSwitch OffContent="Tema claro" OnContent="Tema oscuro" 
+                                    x:Name="toggleTema" IsOn="False"
+                                    ToolTipService.ToolTip="Cambiar de tema"
+                                    Toggled="toggleTema_Toggled"/>
+                        </Flyout>
+                    </Button.Flyout>
+                    
+                </Button>
+            </controls:TabView.TabEndHeader>
 
-        <TextBox Margin="20,10,10,0" TextWrapping="Wrap" Text=""
-            Grid.Column="0" Grid.Row="1" AcceptsReturn="True"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            x:Name="textBoxOriginal" PlaceholderText="Texto original"
-            GotFocus="TextBox_GotFocus"
-            TextChanged="textBoxOriginal_TextChanged"/>
-
-        <Grid Height="50" Grid.Column="0" Grid.Row="2" Margin="20,0,10,8">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <ToggleSwitch OffContent="" OnContent="" Grid.Column="0"
-                x:Name="toggleTema" IsOn="False" Width="50"
-                ToolTipService.ToolTip="Cambiar de tema"
-                Toggled="toggleTema_Toggled"/>
-
-            <TextBlock Text="Claro" Grid.Column="1"
-                VerticalAlignment="Center" FontSize="15"
-                x:Name="textBlockTema"/>
-
-            <Button Content="Limpiar" HorizontalAlignment="Right"
-                x:Name="btnLimpiarOriginal" Grid.Column="2"
-                ToolTipService.ToolTip="Borrar texto original"
-                Style="{StaticResource ButtonRevealStyle}"
-                Click="btnLimpiarOriginal_Click"/>
-
-        </Grid>
-
-        <!--Columna 1-->
-
-        <TextBox Margin="10,10,20,0" TextWrapping="Wrap" Text=""
-            Grid.Column="1" Grid.Row="1" AcceptsReturn="True"
-            ScrollViewer.VerticalScrollBarVisibility="Auto"
-            IsReadOnly="True" PlaceholderText="Texto sin justificado, guiones ni saltos de línea"
-            x:Name="textBoxFormateado"
-            GotFocus="textBoxFormateado_GotFocus"/>
-
-        <Grid Height="50" Grid.Column="1" Grid.Row="2" Margin="10,0,20,8">
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
-
-            <CheckBox Content="Sin guiones" IsChecked="True"
-                      x:Name="checkBoxGuiones" 
-                      Checked="checkBoxGuiones_Checked"
-                      Unchecked="checkBoxGuiones_Unchecked"/>
-
-            <Button Content="&#xE895;" HorizontalAlignment="Right"
-                Margin="0,0,20,0" x:Name="btnActualizar" Grid.Column="0"
-                Height="33" FontFamily="Segoe MDL2 Assets"
-                ToolTipService.ToolTip="Actualizar"
-                Style="{StaticResource ButtonRevealStyle}"
-                Click="btnActualizar_Click"/>
-
-            <Button Content="Copiar" Grid.Column="1" x:Name="btnCopiar"
-                ToolTipService.ToolTip="Copiar texto sin justificado"
-                Style="{StaticResource ButtonRevealStyle}"
-                Click="btnCopiar_Click">
-                <Button.Flyout>
-                    <Flyout>
-                        <TextBlock Text="Texto copiado!"/>
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
-
-        </Grid>
-
+        </controls:TabView>
+        
     </Grid>
 </Page>

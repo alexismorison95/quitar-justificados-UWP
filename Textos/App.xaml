@@ -12,12 +12,15 @@
                       TintColor="Black"
                       TintOpacity="0.6"
                       FallbackColor="Black"/>
+        
         <AcrylicBrush x:Key="CustomAcrylicLight"
                       BackgroundSource="HostBackdrop"
                       TintColor="White"
                       TintOpacity="0"
                       FallbackColor="White"
                       Windows10version1903:TintLuminosityOpacity="0.9"/>
+
+        <SolidColorBrush x:Key="FlyoutBackBrush" Color="#FF2B2B2B"/>
 
     </Application.Resources>
 
